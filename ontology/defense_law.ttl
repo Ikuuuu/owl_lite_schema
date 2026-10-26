@@ -1,0 +1,128 @@
+@prefix dl: <http://example.org/defense-law#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://example.org/defense-law> a owl:Ontology ;
+    rdfs:label "국방 법령 지식그래프 온톨로지 (OWL Lite)"@ko .
+
+dl:AddendumArticle a owl:Class ;
+    rdfs:label "부칙 조문"@ko ;
+    rdfs:subClassOf dl:TextUnit .
+
+dl:EnforcementOrdinance a owl:Class ;
+    rdfs:label "시행령(대통령령)"@ko ;
+    rdfs:subClassOf dl:LegalDocument .
+
+dl:EnforcementRule a owl:Class ;
+    rdfs:label "시행규칙(부령)"@ko ;
+    rdfs:subClassOf dl:LegalDocument .
+
+dl:JointAdministrativeOrder a owl:Class ;
+    rdfs:label "공동훈령"@ko ;
+    rdfs:subClassOf dl:AdministrativeOrder .
+
+dl:Law a owl:Class ;
+    rdfs:label "법률"@ko ;
+    rdfs:subClassOf dl:LegalDocument .
+
+dl:SpecialRegulation a owl:Class ;
+    rdfs:label "특례규정"@ko ;
+    rdfs:subClassOf dl:LegalDocument .
+
+dl:cites a owl:ObjectProperty ;
+    rdfs:label "인용"@ko ;
+    rdfs:domain dl:TextUnit ;
+    rdfs:range dl:LegalResource .
+
+dl:citesExternal a owl:ObjectProperty ;
+    rdfs:label "외부인용"@ko ;
+    rdfs:domain dl:TextUnit ;
+    rdfs:range dl:ExternalLegalDocument .
+
+dl:issuedBy a owl:ObjectProperty ;
+    rdfs:label "발령기관"@ko ;
+    rdfs:domain dl:LegalDocument ;
+    rdfs:range dl:Organization .
+
+dl:AdministrativeOrder a owl:Class ;
+    rdfs:label "행정규칙(훈령·규정)"@ko ;
+    rdfs:subClassOf dl:LegalDocument .
+
+dl:Agent a owl:Class ;
+    rdfs:label "주체"@ko .
+
+dl:ExternalLegalDocument a owl:Class ;
+    rdfs:label "말뭉치 외부 법령"@ko ;
+    rdfs:subClassOf dl:LegalDocument .
+
+dl:belongsTo a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "소속"@ko ;
+    rdfs:domain dl:Article ;
+    rdfs:range dl:LegalDocument ;
+    owl:inverseOf dl:contains .
+
+dl:childLaw a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "하위법령"@ko ;
+    rdfs:domain dl:LegalDocument ;
+    rdfs:range dl:LegalDocument ;
+    owl:inverseOf dl:parentLaw .
+
+dl:competentAuthority a owl:ObjectProperty ;
+    rdfs:label "소관기관"@ko ;
+    rdfs:domain dl:LegalDocument ;
+    rdfs:range dl:Organization ;
+    owl:inverseOf dl:governingLaw .
+
+dl:contains a owl:InverseFunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "포함"@ko ;
+    rdfs:domain dl:LegalDocument ;
+    rdfs:range dl:Article ;
+    owl:inverseOf dl:belongsTo .
+
+dl:delegatedBy a owl:ObjectProperty ;
+    rdfs:label "위임받음"@ko ;
+    rdfs:domain dl:LegalDocument ;
+    rdfs:range dl:LegalDocument ;
+    owl:inverseOf dl:delegates .
+
+dl:delegates a owl:ObjectProperty ;
+    rdfs:label "위임"@ko ;
+    rdfs:domain dl:LegalDocument ;
+    rdfs:range dl:LegalDocument ;
+    owl:inverseOf dl:delegatedBy .
+
+dl:governingLaw a owl:ObjectProperty ;
+    rdfs:label "관할법령"@ko ;
+    rdfs:domain dl:Organization ;
+    rdfs:range dl:LegalDocument ;
+    owl:inverseOf dl:competentAuthority .
+
+dl:parentLaw a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "상위법령"@ko ;
+    rdfs:domain dl:LegalDocument ;
+    rdfs:range dl:LegalDocument ;
+    owl:inverseOf dl:childLaw .
+
+dl:Article a owl:Class ;
+    rdfs:label "조문"@ko ;
+    rdfs:subClassOf dl:TextUnit .
+
+dl:LegalResource a owl:Class ;
+    rdfs:label "법령 자원"@ko .
+
+dl:Organization a owl:Class ;
+    rdfs:label "기관"@ko ;
+    rdfs:subClassOf dl:Agent .
+
+dl:TextUnit a owl:Class ;
+    rdfs:label "조문 단위"@ko ;
+    rdfs:subClassOf dl:LegalResource .
+
+dl:LegalDocument a owl:Class ;
+    rdfs:label "법령 문서"@ko ;
+    rdfs:subClassOf dl:LegalResource .
+
